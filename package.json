@@ -1,19 +1,24 @@
 {
-  "name": "n8n-nodes-<...>",
+  "name": "n8n-nodes-tomba",
   "version": "0.1.0",
-  "description": "",
+  "description": "N8n nodes for Tomba Email Finder & Email Verifier",
   "keywords": [
-    "n8n-community-node-package"
+    "n8n-community-node-package",
+    "email",
+    "Email Finder",
+    "Email Verifier",
+    "B2B",
+    "email marketing"
   ],
   "license": "MIT",
-  "homepage": "",
+  "homepage": "https://tomba.io",
   "author": {
     "name": "",
     "email": ""
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/<...>/n8n-nodes-<...>.git"
+    "url": "https://github.com/tomba-io/n8n-nodes-tomba.git"
   },
   "main": "index.js",
   "scripts": {
@@ -30,12 +35,10 @@
   "n8n": {
     "n8nNodesApiVersion": 1,
     "credentials": [
-      "dist/credentials/ExampleCredentialsApi.credentials.js",
-      "dist/credentials/HttpBinApi.credentials.js"
+      "dist/credentials/TombaApi.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/ExampleNode/ExampleNode.node.js",
-      "dist/nodes/HttpBin/HttpBin.node.js"
+      "dist/nodes/Tomba/Tomba.node.js"
     ]
   },
   "devDependencies": {
