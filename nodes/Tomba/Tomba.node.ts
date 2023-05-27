@@ -27,52 +27,61 @@ export class Tomba implements INodeType {
 				displayName: 'Operation',
 				name: 'operation',
 				type: 'options',
+				noDataExpression: true,
 				options: [
 					{
-						name: ' Domain Search',
+						name: 'Autocomplete',
+						value: 'Autocomplete',
+						description: 'Find company names and retrieve logo and domain information',
+						action: 'Find company names and retrieve logo and domain information',
+					},
+					{
+						name: 'Domain Search',
 						value: 'domainSearch',
 						description:
 							'Get every email address found on the internet using a given domain name, with sources',
+						action: 'Get every email address found on the internet using a given domain name with sources',
 					},
 					{
-						name: ' Email Finder',
+						name: 'Domain Status',
+						value: 'DomainStatus',
+						description: 'Find domain status if is webmail or disposable',
+						action: 'Find domain status if is webmail or disposable',
+					},
+					{
+						name: 'Email Count',
+						value: 'EmailCount',
+						description: 'Find total email addresses we have for one domain',
+						action: 'Find total email addresses we have for one domain',
+					},
+					{
+						name: 'Email Finder',
 						value: 'emailFinder',
 						description:
 							'Generate or retrieve the most likely email address from a domain name, a first name and a last name',
-					},
-					{
-						name: 'Email Verifier',
-						value: 'emailVerifier',
-						description: 'Verify the deliverability of an email address',
+						action: 'Generate or retrieve the most likely email address from a domain name a first name and a last name',
 					},
 					{
 						name: 'Email Sources',
 						value: 'emailSources',
 						description: 'Find email address source somewhere on the web',
+						action: 'Find email address source somewhere on the web',
+					},
+					{
+						name: 'Email Verifier',
+						value: 'emailVerifier',
+						description: 'Verify the deliverability of an email address',
+						action: 'Verify the deliverability of an email address',
 					},
 					{
 						name: 'Phone Finder',
 						value: 'PhoneFinder',
 						description: 'Find email address of an phone',
-					},
-					{
-						name: 'Email Count',
-						value: 'EmailCount',
-						description: 'Find total email addresses we have for one domain.',
-					},
-					{
-						name: 'Domain Status',
-						value: 'DomainStatus',
-						description: 'Find domain status if is webmail or disposable.',
-					},
-					{
-						name: 'Autocomplete',
-						value: 'Autocomplete',
-						description: 'Find company names and retrieve logo and domain information.',
+						action: 'Find email address of an phone',
 					},
 				],
 				default: 'domainSearch',
-				description: 'operation to consume.',
+				description: 'Operation to consume',
 			},
 			{
 				displayName: 'Domain',
@@ -98,7 +107,7 @@ export class Tomba implements INodeType {
 					},
 				},
 				default: true,
-				description: 'Return only the the found emails.',
+				description: 'Whether only the the found emails',
 			},
 			{
 				displayName: 'Limit',
@@ -111,10 +120,9 @@ export class Tomba implements INodeType {
 				},
 				typeOptions: {
 					minValue: 1,
-					maxValue: 100,
 				},
-				default: 10,
-				description: 'How many results to return.',
+				default: 50,
+				description: 'Max number of results to return',
 			},
 			{
 				displayName: 'Filters',
@@ -132,7 +140,7 @@ export class Tomba implements INodeType {
 						displayName: 'Type',
 						name: 'type',
 						type: 'options',
-						default: '',
+						default: 'personal',
 						options: [
 							{
 								name: 'Personal',
@@ -151,44 +159,44 @@ export class Tomba implements INodeType {
 						default: [],
 						options: [
 							{
-								name: 'Executive',
-								value: 'executive',
+								name: 'Communication',
+								value: 'communication',
 							},
 							{
-								name: 'IT',
-								value: 'it',
+								name: 'Executive',
+								value: 'executive',
 							},
 							{
 								name: 'Finance',
 								value: 'finance',
 							},
 							{
-								name: 'Management',
-								value: 'management',
+								name: 'HR',
+								value: 'hr',
 							},
 							{
-								name: 'Sales',
-								value: 'sales',
+								name: 'IT',
+								value: 'it',
 							},
 							{
 								name: 'Legal',
 								value: 'legal',
 							},
 							{
-								name: 'Support',
-								value: 'support',
-							},
-							{
-								name: 'HR',
-								value: 'hr',
+								name: 'Management',
+								value: 'management',
 							},
 							{
 								name: 'Marketing',
 								value: 'marketing',
 							},
 							{
-								name: 'Communication',
-								value: 'communication',
+								name: 'Sales',
+								value: 'sales',
+							},
+							{
+								name: 'Support',
+								value: 'support',
 							},
 						],
 					},
@@ -219,7 +227,7 @@ export class Tomba implements INodeType {
 				},
 				default: '',
 				required: true,
-				description: `The person's first name. It doesn't need to be in lowercase.`,
+				description: "The person's first name. It doesn't need to be in lowercase.",
 			},
 			{
 				displayName: 'Last Name',
@@ -232,12 +240,13 @@ export class Tomba implements INodeType {
 				},
 				default: '',
 				required: true,
-				description: `The person's last name. It doesn't need to be in lowercase.`,
+				description: "The person's last name. It doesn't need to be in lowercase.",
 			},
 			{
 				displayName: 'Email',
 				name: 'email',
 				type: 'string',
+				placeholder: 'name@email.com',
 				displayOptions: {
 					show: {
 						operation: ['emailVerifier'],
@@ -245,12 +254,13 @@ export class Tomba implements INodeType {
 				},
 				default: '',
 				required: true,
-				description: 'The email address you want to verify.',
+				description: 'The email address you want to verify',
 			},
 			{
 				displayName: 'Email',
 				name: 'email',
 				type: 'string',
+				placeholder: 'name@email.com',
 				displayOptions: {
 					show: {
 						operation: ['emailSources'],
@@ -258,12 +268,13 @@ export class Tomba implements INodeType {
 				},
 				default: '',
 				required: true,
-				description: 'The email address you want to find sources.',
+				description: 'The email address you want to find sources',
 			},
 			{
 				displayName: 'Email',
 				name: 'email',
 				type: 'string',
+				placeholder: 'name@email.com',
 				displayOptions: {
 					show: {
 						operation: ['PhoneFinder'],
@@ -271,7 +282,7 @@ export class Tomba implements INodeType {
 				},
 				default: '',
 				required: true,
-				description: 'The email address you want to find phone.',
+				description: 'The email address you want to find phone',
 			},
 			{
 				displayName: 'Domain',
@@ -311,7 +322,7 @@ export class Tomba implements INodeType {
 				},
 				default: '',
 				required: true,
-				description: 'name of the company or website.',
+				description: 'Name of the company or website',
 			},
 		],
 	};
@@ -319,7 +330,7 @@ export class Tomba implements INodeType {
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
 		const items = this.getInputData();
 		const returnData: IDataObject[] = [];
-		const length = items.length as unknown as number;
+		const length = items.length;
 		const qs: IDataObject = {};
 		let responseData;
 		for (let i = 0; i < length; i++) {
