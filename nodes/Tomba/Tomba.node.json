@@ -6,12 +6,12 @@
 	"resources": {
 		"credentialDocumentation": [
 			{
-				"url": "https://developer.tomba.io/#introduction-authentication"
+				"url": "https://docs.tomba.io/authentication"
 			}
 		],
 		"primaryDocumentation": [
 			{
-				"url": "https://tomba.io/"
+				"url": "https://docs.tomba.io/integrations/n8n"
 			}
 		]
 	}
