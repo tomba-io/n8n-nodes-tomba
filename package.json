@@ -1,6 +1,6 @@
 {
 	"name": "n8n-nodes-tomba",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "N8n nodes for Tomba Email Finder & Email Verifier",
 	"keywords": [
 		"n8n-community-node-package",
