@@ -1,4 +1,9 @@
-import { ICredentialType, INodeProperties } from 'n8n-workflow';
+import {
+	IAuthenticateGeneric,
+	ICredentialTestRequest,
+	ICredentialType,
+	INodeProperties,
+} from 'n8n-workflow';
 
 export class TombaApi implements ICredentialType {
 	name = 'tombaApi';
@@ -26,4 +31,20 @@ export class TombaApi implements ICredentialType {
 			hint: 'You can find your API secret in your Tomba account API page.',
 		},
 	];
+	authenticate: IAuthenticateGeneric = {
+		type: 'generic',
+		properties: {
+			headers: {
+				'X-Tomba-Key': '={{$credentials.apiKey}}',
+				'X-Tomba-Secret': '={{$credentials.secretKey}}',
+			},
+		},
+	};
+	test: ICredentialTestRequest = {
+		request: {
+			baseURL: 'https://api.tomba.io/v1',
+			url: '/me',
+			method: 'GET',
+		},
+	};
 }
