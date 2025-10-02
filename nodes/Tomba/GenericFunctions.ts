@@ -41,7 +41,7 @@ export async function tombaApiRequest(
 		delete options.body;
 	}
 	try {
-		return await this.helpers.request(options);
+		return await this.helpers.httpRequest.call(this, options);
 	} catch (error) {
 		throw new NodeApiError(this.getNode(), error as JsonObject);
 	}
