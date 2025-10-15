@@ -629,7 +629,7 @@ export class Tomba implements INodeType {
 
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
 		const items = this.getInputData();
-		const returnData: IDataObject[] = [];
+		const returnData: INodeExecutionData[] = [];
 		const length = items.length;
 		const qs: IDataObject = {};
 		let responseData;
@@ -828,19 +828,32 @@ export class Tomba implements INodeType {
 					responseData = await tombaApiRequest.call(this, 'GET', '/technology', {}, qs);
 					responseData = responseData.data;
 				}
+
+				// Handle responseData and add with proper pairedItem tracking
 				if (Array.isArray(responseData)) {
-					returnData.push.apply(returnData, responseData as IDataObject[]);
+					for (const item of responseData) {
+						returnData.push({
+							json: item as IDataObject,
+							pairedItem: { item: i },
+						});
+					}
 				} else {
-					returnData.push(responseData as IDataObject);
+					returnData.push({
+						json: responseData as IDataObject,
+						pairedItem: { item: i },
+					});
 				}
 			} catch (error) {
 				if (this.continueOnFail()) {
-					returnData.push({ error: error.errors });
+					returnData.push({
+						json: { error: error.errors },
+						pairedItem: { item: i },
+					});
 					continue;
 				}
 				throw error;
 			}
 		}
-		return [this.helpers.returnJsonArray(returnData)];
+		return [returnData];
 	}
 }
