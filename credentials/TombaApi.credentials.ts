@@ -3,11 +3,19 @@ import {
 	ICredentialTestRequest,
 	ICredentialType,
 	INodeProperties,
+	Icon,
 } from 'n8n-workflow';
 
 export class TombaApi implements ICredentialType {
 	name = 'tombaApi';
 	displayName = 'Tomba API';
+	icon: Icon = { light: 'file:../icons/tomba.svg', dark: 'file:../icons/tomba.dark.svg' };
+	httpRequestNode = {
+		name: 'Tomba API',
+		docsUrl: 'https://developer.tomba.io',
+		apiBaseUrl: 'https://api.tomba.io/v1',
+	};
+
 	documentationUrl = 'https://app.tomba.io/api';
 	properties: INodeProperties[] = [
 		{
