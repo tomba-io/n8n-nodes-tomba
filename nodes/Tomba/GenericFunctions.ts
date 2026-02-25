@@ -13,12 +13,11 @@ export async function tombaApiRequest(
 	this: IHookFunctions | IExecuteFunctions | ILoadOptionsFunctions,
 	method: IHttpRequestMethods,
 	resource: string,
-
-	body: any = {},
+	body: IDataObject = {},
 	qs: IDataObject = {},
 	uri?: string,
 	option: IDataObject = {},
-): Promise<any> {
+): Promise<IDataObject> {
 	const credentials = await this.getCredentials('tombaApi');
 	if (credentials === undefined) {
 		throw new NodeOperationError(this.getNode(), 'No credentials got returned!');
@@ -53,9 +52,9 @@ export async function tombaApiRequestAllItems(
 	method: IHttpRequestMethods,
 	resource: string,
 
-	body: any = {},
+	body: IDataObject = {},
 	query: IDataObject = {},
-): Promise<any> {
+): Promise<IDataObject[]> {
 	const returnData: IDataObject[] = [];
 
 	let responseData;
@@ -67,8 +66,8 @@ export async function tombaApiRequestAllItems(
 		returnData.push(responseData[propertyName] as IDataObject);
 		query.page += query.limit;
 	} while (
-		responseData.meta?.total !== undefined &&
-		responseData.meta.page <= responseData.meta.total
+		(responseData.meta as IDataObject | undefined)?.total !== undefined &&
+		((responseData.meta as IDataObject).page as number) <= ((responseData.meta as IDataObject).total as number)
 	);
 	return returnData;
 }
